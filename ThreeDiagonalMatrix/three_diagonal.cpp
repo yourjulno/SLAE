@@ -5,12 +5,12 @@
 
 #include "three_diagonal.h"
 
-ThirdDiagonalMatrix::ThirdDiagonalMatrix(unsigned int N) {
-    data_.resize(N);
+ThirdDiagonalMatrix::ThirdDiagonalMatrix(const std::vector<line> &matrix) {
+    data_ = matrix;
 }
 
-double &ThirdDiagonalMatrix::operator()(unsigned int i, unsigned int j) const {
-    double number_;
+double &ThirdDiagonalMatrix::operator()(unsigned int i, unsigned int j) const{
+    static double num;
     if (i > data_.size()){
         throw;
     }
@@ -18,15 +18,15 @@ double &ThirdDiagonalMatrix::operator()(unsigned int i, unsigned int j) const {
         throw;
     }
     if (j == 0){
-        number_ = data_[i].first;
+        num = data_[i].first;
     }
     if (j == 1){
-        number_ = data_[i].second;
+        num = data_[i].second;
     }
     if (j == 2){
-        number_ = data_[i].third;
+        num = data_[i].third;
     }
-    return number_;
+    return num;
 
 }
 

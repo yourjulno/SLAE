@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.24)
 project(SLAE)
+add_executable(SLAE main.cpp ThreeDiagonalMatrix/three_diagonal.cpp ThreeDiagonalMatrix/three_diagonal.h solve/TreeDiagonalSolve.cpp solve/TreeDiagonalSolve.h)
 
 set(CMAKE_CXX_STANDARD 17)
-
-add_executable(SLAE main.cpp ThreeDiagonalMatrix/three_diagonal.cpp ThreeDiagonalMatrix/three_diagonal.h solve/TreeDiagonalSolve.cpp solve/TreeDiagonalSolve.h)
+enable_testing()
+#add_subdirectory(googletest)
+target_link_libraries(SLAE gtest gmock pthread)
+target_link_libraries(SLAE gtest_main gmock_main)
