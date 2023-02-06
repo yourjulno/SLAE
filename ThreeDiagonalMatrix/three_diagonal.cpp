@@ -3,13 +3,13 @@
 //
 
 
-#include "third_diagonal.h"
+#include "three_diagonal.h"
 
 ThirdDiagonalMatrix::ThirdDiagonalMatrix(unsigned int N) {
     data_.resize(N);
 }
 
-double &ThirdDiagonalMatrix::operator()(int i, int j) const {
+double &ThirdDiagonalMatrix::operator()(unsigned int i, unsigned int j) const {
     double number_;
     if (i > data_.size()){
         throw;

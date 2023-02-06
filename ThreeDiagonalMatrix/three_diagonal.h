@@ -21,7 +21,7 @@ private:
 public:
     explicit ThirdDiagonalMatrix(unsigned int N);
     /* N - size of matix */
-    double & operator()(int i, int j) const;
+    double & operator()(unsigned int i, unsigned int j) const;
    /* returns (i, j) of matrix
     * i -- row, j - {0, 1, 2} */
     [[nodiscard]] unsigned int rows() const;
