@@ -6,7 +6,7 @@
 
 std::vector<double> SolveOfTridiagonal::solution_data;
 std::vector<double> SolveOfTridiagonal::find_x(std::vector<double> &p, std::vector<double> &q) {
-//    solution_data.resize(p.size());
+
 
     for (int i = p.size() - 2; i >= 0; i--){
         solution_data[i] = p[i] * solution_data[i + 1]+ q[i];
