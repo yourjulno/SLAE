@@ -23,7 +23,7 @@ private:
 public:
     explicit ThirdDiagonalMatrix(const std::vector<line> &matrix);
     /* N - size of matix */
-    double & operator()(unsigned int i, unsigned int j) const;
+    std::array<double, 3> & operator()(unsigned int i) const;
    /* returns (i, j) of matrix
     * i -- row, j - {0, 1, 2} */
     [[nodiscard]] unsigned int rows() const;

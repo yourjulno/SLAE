@@ -7,3 +7,5 @@ enable_testing()
 #add_subdirectory(googletest)
 target_link_libraries(SLAE gtest gmock pthread)
 target_link_libraries(SLAE gtest_main gmock_main)
+
+add_subdirectory(tests)
