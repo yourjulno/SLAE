@@ -7,23 +7,25 @@
 #include <array>
 #ifndef SLAE_THIRD_DIAGONAL_H
 #define SLAE_THIRD_DIAGONAL_H
+
+template<class T>
 struct line{
-    double first;
-    double second;
-    double third;
+    T first;
+    T second;
+    T third;
 };
 
-
+template<class T>
 class ThirdDiagonalMatrix {
 private:
 
 //    double num = 0;
-    std::vector<line> data_;
+    std::vector<line<T>> data_;
 
 public:
-    explicit ThirdDiagonalMatrix(const std::vector<line> &matrix);
+    explicit ThirdDiagonalMatrix(const std::vector<line<T>> &matrix);
     /* N - size of matix */
-    std::array<double, 3> & operator()(unsigned int i) const;
+    std::array<T, 3> & operator[](unsigned int i) const;
    /* returns (i, j) of matrix
     * i -- row, j - {0, 1, 2} */
     [[nodiscard]] unsigned int rows() const;

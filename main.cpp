@@ -6,12 +6,12 @@
 using namespace std;
 
 TEST(TESTTRIDIAGONAL, FIRST){
-    vector<line> example = {{2, -1, 0}, {5, 4, 2}, {0, 1, -3}};
+    vector<line<double>> example = {{2, -1, 0}, {5, 4, 2}, {0, 1, -3}};
     vector<double> free = {3,6,2};
     vector<double> x = {1.49, -0.026, -0.67};
 
 
-    ThirdDiagonalMatrix first(example);
+    ThirdDiagonalMatrix<double> first(example);
 
     vector <double> solve = SolveOfTridiagonal::find_q_p(first, free);
 

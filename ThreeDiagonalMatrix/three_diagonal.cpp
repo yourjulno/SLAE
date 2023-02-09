@@ -5,11 +5,12 @@
 
 #include "three_diagonal.h"
 
-ThirdDiagonalMatrix::ThirdDiagonalMatrix(const std::vector<line> &matrix) {
+template<class T>
+ThirdDiagonalMatrix<T>::ThirdDiagonalMatrix(const std::vector<line<T>> &matrix) {
     data_ = matrix;
 }
-
-std::array<double, 3> &ThirdDiagonalMatrix::operator()(unsigned int i) const{
+template<class T>
+std::array<T, 3> &ThirdDiagonalMatrix<T>::operator[](unsigned int i) const{
 
     static std::array<double, 3> num_in_lines{};
 
@@ -20,7 +21,7 @@ std::array<double, 3> &ThirdDiagonalMatrix::operator()(unsigned int i) const{
     return num_in_lines;
 
 }
-
-unsigned int ThirdDiagonalMatrix::rows() const {
+template <class T>
+unsigned int ThirdDiagonalMatrix<T>::rows() const {
     return data_.size();
 }
