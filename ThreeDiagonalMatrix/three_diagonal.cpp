@@ -12,7 +12,7 @@ ThirdDiagonalMatrix<T>::ThirdDiagonalMatrix(const std::vector<line<T>> &matrix) 
 template<class T>
 std::array<T, 3> &ThirdDiagonalMatrix<T>::operator[](unsigned int i) const{
 
-    static std::array<double, 3> num_in_lines{};
+    static std::array<T, 3> num_in_lines{};
 
     num_in_lines[0] = data_[i].first;
     num_in_lines[1] = data_[i].second;
