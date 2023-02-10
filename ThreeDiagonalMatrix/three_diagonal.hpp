@@ -19,7 +19,6 @@ template<class T>
 class ThirdDiagonalMatrix {
 private:
 
-//    double num = 0;
     std::vector<line<T>> data_;
 
 public:
