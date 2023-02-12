@@ -7,7 +7,7 @@
 #include "../src/solve/TreeDiagonalSolve.hpp"
 
 TEST(TESTTRIDIAGONAL, FIRST){
-std::vector<line<double>> example = {{0,2,3},{6,3,9},{2,5,2},{4,3,0}};
+std::vector<SLAE::line<double>> example = {{0,2,3},{6,3,9},{2,5,2},{4,3,0}};
 std::vector<double> free = {21.0, 69.0, 34.0, 22.0};
 std::vector<double> x = {2.9, 4.8, 3.8, 1.6};
 
