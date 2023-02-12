@@ -1,8 +1,8 @@
 //
 // Created by julia on 05.02.23.
 //
-#include <vector>
-#include "../ThreeDiagonalMatrix/three_diagonal.hpp"
+
+
 #ifndef SLAE_TREEDIAGONALSOLVE_H
 #define SLAE_TREEDIAGONALSOLVE_H
 

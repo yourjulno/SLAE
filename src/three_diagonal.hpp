@@ -1,30 +1,33 @@
 //
 // Created by julia on 05.02.23.
 //
+
+#ifndef SLAE_THIRD_DIAGONAL_H
+#define SLAE_THIRD_DIAGONAL_H
 #include <vector>
 #include <iostream>
 #include <string>
 #include <array>
-#ifndef SLAE_THIRD_DIAGONAL_H
-#define SLAE_THIRD_DIAGONAL_H
+namespace SLAE {
 
-template<class T>
-struct line{
-    T first;
-    T second;
-    T third;
-};
+    template<class T>
+    struct line {
+        T first;
+        T second;
+        T third;
+    };
+}
 
 template<class T>
 class ThirdDiagonalMatrix {
 private:
 
-    std::vector<line<T>> data_;
+    std::vector<SLAE::line<T>> data_;
 
 public:
-    explicit ThirdDiagonalMatrix(const std::vector<line<T>> &matrix);
+    explicit ThirdDiagonalMatrix(const std::vector<SLAE::line<T>> &matrix);
     /* N - size of matix */
-    std::array<T, 3> & operator[](unsigned int i) const;
+    const std::array<T, 3> & operator[](unsigned int i) const;
    /* returns (i, j) of matrix
     * i -- row, j - {0, 1, 2} */
     [[nodiscard]] unsigned int rows() const;
@@ -33,11 +36,11 @@ public:
 };
 
 template<typename T>
-ThirdDiagonalMatrix<T>::ThirdDiagonalMatrix(const std::vector<line<T>> &matrix) {
+ThirdDiagonalMatrix<T>::ThirdDiagonalMatrix(const std::vector<SLAE::line<T>> &matrix) {
     data_ = matrix;
 }
 template<class T>
-std::array<T, 3> &ThirdDiagonalMatrix<T>::operator[](unsigned int i) const{
+const std::array<T, 3> &ThirdDiagonalMatrix<T>::operator[](unsigned int i) const{
 
     static std::array<T, 3> num_in_lines{};
 
