@@ -20,8 +20,4 @@ for (int i = 0; i < solve.size(); i++){
 ASSERT_NEAR(solve[i], x[i], 0.01);
 }
 }
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
 
