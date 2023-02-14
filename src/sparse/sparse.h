@@ -9,8 +9,8 @@
 
 template <class T>
 struct Tri{
-    size_t i; // номер строки
-    size_t j; // номер столбца
+    int i; // номер строки
+    int j; // номер столбца
     T val;
 
     bool operator<(Tri<T> const & other) const
@@ -23,10 +23,14 @@ template <class T>
 class CSR{
 
     int matr_col; // кол-во столбцов матрицы
-    int matr_rows; // кол-во строк матрицы
-    std::vector<T> values; // ненулевые элементы матрицы
-    std::vector<T> col; // столбцы ненулевых значений
-    std::vector<T> rows; // сколько ненулевых элементов в строках до и в нынешней
+    int matr_rows;
+
+
+    // кол-во строк матрицы
+    std::vector<T> values;
+    // ненулевые элементы матрицы
+    std::vector<int> col; // столбцы ненулевых значений
+    std::vector<int> rows; // сколько ненулевых элементов в строках до и в нынешней
 public:
     // если готовая CSR матрица
     CSR(const std::vector<T>& val_, const std::vector<T>& col_,
@@ -56,18 +60,43 @@ public:
                 // строк в старых
                 rows[first_row + 1] = rows[first_row] + is_in_row; // взяли элемент, присвоили то,
                 // что было до + 1
-                first_row++;
+                ++first_row;
                 is_in_row = 0;
             }
-            is_in_row++;
+            ++is_in_row;
             iter = std::next(iter);
         }
 
     }
+//    explicit CSR(const std::set<std::vector<T>> &other){
+//        std::vector<Tri<T>> val;
+//
+//        int n = other.size();
+//        auto iter = other.begin();
+//        for (int i = 0; i != n; i++){
+//            int next = iter->size();
+//            for (int k = 0; k < next; k++){
+//                if (*iter[k] !=0)
+//                    val.push_back(*iter[k]);
+//            }
+//
+//        }
+//    }
 
+    int getMatrRows() const {
+        return matr_rows;
+    }
+    T getValues(int i) const {
+        return values[i];
+    }
+    int getCol(int i) const {
+        return col[i];
+    }
     const T &operator()(int i, int j) const;
 
 };
+
+
 
 template<class T>
 const T &CSR<T>::operator()(int i, int j) const{

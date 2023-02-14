@@ -27,7 +27,7 @@ private:
 public:
     explicit ThirdDiagonalMatrix(const std::vector<SLAE::line<T>> &matrix);
     /* N - size of matix */
-    const std::array<T, 3> & operator[](unsigned int i) const;
+    std::array<T, 3>  operator[](unsigned int i) const;
    /* returns (i, j) of matrix
     * i -- row, j - {0, 1, 2} */
     [[nodiscard]] unsigned int rows() const;
@@ -40,9 +40,9 @@ ThirdDiagonalMatrix<T>::ThirdDiagonalMatrix(const std::vector<SLAE::line<T>> &ma
     data_ = matrix;
 }
 template<class T>
-const std::array<T, 3> &ThirdDiagonalMatrix<T>::operator[](unsigned int i) const{
+ std::array<T, 3> ThirdDiagonalMatrix<T>::operator[](unsigned int i) const{
 
-    static std::array<T, 3> num_in_lines{};
+     std::array<T, 3> num_in_lines{};
 
     num_in_lines[0] = data_[i].first;
     num_in_lines[1] = data_[i].second;
