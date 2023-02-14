@@ -74,7 +74,7 @@ const T &CSR<T>::operator()(int i, int j) const{
         static T number = 0;
         auto row_ = rows[j - 1]; // здесь находится переменная по индексу i (строки)
         for (int k = row_; k < col.size(); k++){ //отсекаем эл-ты col[row_, size] (где-то в них наш)
-            if (col[k] == j - 1){
+            if (col[k] == j){
                 number = values[k];
             }
         }
