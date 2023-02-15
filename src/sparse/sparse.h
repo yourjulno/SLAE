@@ -16,6 +16,7 @@ struct Tri{
     bool operator<(Tri<T> const & other) const
     {
         return this->i < other.i || (this->i == other.i && this->j < other.j);
+
     }
 };
 
@@ -40,7 +41,7 @@ public:
         rows = rows_;
     }
     // если подадим сет из структур
-   CSR(const std::set<Tri<T>> & triple, int matr_col_, int matr_rows_){
+   CSR(const std::set<Tri<T>> & triple, int matr_col_, int matr_rows_) {
         matr_col = matr_col_;
         matr_rows = matr_rows_;
 
@@ -66,7 +67,7 @@ public:
             ++is_in_row;
             iter = std::next(iter);
         }
-
+        rows[matr_rows] = triple.size();
     }
 //    explicit CSR(const std::set<std::vector<T>> &other){
 //        std::vector<Tri<T>> val;
@@ -83,28 +84,40 @@ public:
 //        }
 //    }
 
-    int getMatrRows() const {
-        return matr_rows;
+    int getMatrRows(int i) const {
+        return rows[i];
     }
     T getValues(int i) const {
         return values[i];
     }
-    int getCol(int i) const {
+    [[nodiscard]] int getColns(int i) const {
         return col[i];
     }
-    const T &operator()(int i, int j) const;
+    [[nodiscard]] int  getRow() const{
+        return matr_rows;
+    }
+    [[nodiscard]] int getCol() const{
+        return matr_col;
+    }
+    T operator()(int row, int coln) const;
 
 };
 
 
 
 template<class T>
-const T &CSR<T>::operator()(int i, int j) const{
-        static T number = 0;
-        auto row_ = rows[j - 1]; // здесь находится переменная по индексу i (строки)
-        for (int k = row_; k < col.size(); k++){ //отсекаем эл-ты col[row_, size] (где-то в них наш)
-            if (col[k] == j){
-                number = values[k];
+ T CSR<T>::operator()(int row, int coln) const{
+        T number = 0;
+        int currCol;
+
+        for (int pos = rows[row]; pos < rows[row + 1]; ++pos){
+            currCol = col[pos];
+
+            if (currCol == coln){
+                return values[pos];
+            }
+            else if (currCol > coln){
+                break;
             }
         }
         return number;
