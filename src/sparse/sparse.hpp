@@ -2,8 +2,8 @@
 // Created by julia on 13.02.23.
 //
 
-#ifndef SLAE_SPARSE_H
-#define SLAE_SPARSE_H
+#ifndef SLAE_SPARSE_HPP
+#define SLAE_SPARSE_HPP
 #include <vector>
 #include <set>
 
@@ -33,6 +33,7 @@ class CSR{
     std::vector<int> col; // столбцы ненулевых значений
     std::vector<int> rows; // сколько ненулевых элементов в строках до и в нынешней
 public:
+    CSR() = default;
     // если готовая CSR матрица
     CSR(const std::vector<T>& val_, const std::vector<T>& col_,
            const std::vector<T>& rows_){
@@ -47,7 +48,8 @@ public:
 
         values.resize(triple.size(), 0);
         col.resize(triple.size(), 0);
-        rows.resize(matr_rows + 1, 0);
+        rows.resize(matr_rows + 1, triple.size());
+        rows[0] = 0;
 
         auto iter = triple.begin();
         auto first_row = 0;
@@ -67,24 +69,11 @@ public:
             ++is_in_row;
             iter = std::next(iter);
         }
-        rows[matr_rows] = triple.size();
+//       for (int i = matr_rows; )
+//        rows[matr_rows] = triple.size();
     }
-//    explicit CSR(const std::set<std::vector<T>> &other){
-//        std::vector<Tri<T>> val;
-//
-//        int n = other.size();
-//        auto iter = other.begin();
-//        for (int i = 0; i != n; i++){
-//            int next = iter->size();
-//            for (int k = 0; k < next; k++){
-//                if (*iter[k] !=0)
-//                    val.push_back(*iter[k]);
-//            }
-//
-//        }
-//    }
 
-    int getMatrRows(int i) const {
+    [[nodiscard]] int getMatrRows(int i) const {
         return rows[i];
     }
     T getValues(int i) const {
@@ -99,9 +88,11 @@ public:
     [[nodiscard]] int getCol() const{
         return matr_col;
     }
+    std::vector<T> operator*(const std::vector<T> &free_);
     T operator()(int row, int coln) const;
 
 };
+
 
 
 
@@ -123,5 +114,17 @@ template<class T>
         return number;
 
 }
+template<class T>
+std::vector<T> CSR<T>::operator*(const std::vector<T> &free_) {
 
-#endif //SLAE_SPARSE_H
+
+    std::vector<T> solution(matr_rows, 0);
+    for (int i = 0; i < matr_col; i++)
+        for (int j = rows[i]; j < rows[i + 1]; j++){
+            solution[i] = solution[i] + values[j]*free_[col[j]];
+        }
+    return solution;
+
+}
+
+#endif //SLAE_SPARSE_HPP
