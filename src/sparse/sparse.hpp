@@ -35,7 +35,7 @@ class CSR{
 public:
     CSR() = default;
     // если готовая CSR матрица
-    CSR(const std::vector<T>& val_, const std::vector<T>& col_,
+    [[maybe_unused]] CSR(const std::vector<T>& val_, const std::vector<T>& col_,
            const std::vector<T>& rows_){
         values = val_;
         col = col_;
@@ -49,28 +49,22 @@ public:
         values.resize(triple.size(), 0);
         col.resize(triple.size(), 0);
         rows.resize(matr_rows + 1, triple.size());
+
         rows[0] = 0;
 
         auto iter = triple.begin();
-        auto first_row = 0;
         auto is_in_row = 0;
-
-        for (int k = 0; k != triple.size(); k++){
-            values[k] = iter->val;
-            col[k] = iter->j;
-
-            while (first_row < iter->i){ // каждый находясь в новом элементе переписывает значения
-                // строк в старых
-                rows[first_row + 1] = rows[first_row] + is_in_row; // взяли элемент, присвоили то,
-                // что было до + 1
-                ++first_row;
-                is_in_row = 0;
+        int res = 0;
+        for (int p = 0; p < triple.size(); p++) {
+            values[p] = iter->val;
+            col[p] = iter->j;
+            res++;
+            if (iter->i == std::next(iter)->i - 1){
+                is_in_row++;
+                rows[is_in_row] = res;
             }
-            ++is_in_row;
             iter = std::next(iter);
         }
-//       for (int i = matr_rows; )
-//        rows[matr_rows] = triple.size();
     }
 
     [[nodiscard]] int getMatrRows(int i) const {
