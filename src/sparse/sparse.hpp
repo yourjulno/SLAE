@@ -37,6 +37,7 @@ public:
     // если готовая CSR матрица
     [[maybe_unused]] CSR(const std::vector<T>& val_, const std::vector<T>& col_,
            const std::vector<T>& rows_){
+
         values = val_;
         col = col_;
         rows = rows_;
@@ -82,7 +83,7 @@ public:
     [[nodiscard]] int getCol() const{
         return matr_col;
     }
-    std::vector<T> operator*(const std::vector<T> &free_);
+    std::vector<T> operator*(const std::vector<T> &free_) const;
     T operator()(int row, int coln) const;
 
 };
@@ -109,7 +110,7 @@ template<class T>
 
 }
 template<class T>
-std::vector<T> CSR<T>::operator*(const std::vector<T> &free_) {
+std::vector<T> CSR<T>::operator*(const std::vector<T> &free_) const {
 
 
     std::vector<T> solution(matr_rows, 0);
