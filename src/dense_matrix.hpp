@@ -6,6 +6,7 @@
 #define SLAE_DENSE_MATRIX_H
 #include <vector>
 #include <cmath>
+#include <array>
 //строка * столбец
 template <class T>
 T operator*(const std::vector<T> &other, const std::vector<T> &other2){
@@ -105,6 +106,34 @@ T DenseMatrix<T>::operator()(const int &i, const int &j){
     return data[i * colns + j];
 }
 
+template<class T> // n - rows, m - colns
+DenseMatrix<T> diag_matrix(int n, int m){
+    std::vector<T> data(n * m, 0);
+
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < m; j++){
+            if (i == j){
+                data[j] = 1;
+            }
+        }
+    }
+    return DenseMatrix<T>{data, n, m};
+}
+// столбец * строка
+
+template <class T>
+DenseMatrix<T> coln_row(const std::vector<T> &other, const std::vector<T> &other2){
+    int n = other.size(); // rows
+    int m = other2.size(); // colns
+    std::vector<T> data(n * m);
+
+    for (int i = 0; i < n; i++){ // по строкам
+        for (int j = 0; j < m; j++){
+            data[i*n + j] = other[i] * other2[j];
+        }
+    }
+    return DenseMatrix<T>{data, n, m};
+}
 
 
 // матрица на вектор

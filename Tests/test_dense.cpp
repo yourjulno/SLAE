@@ -26,12 +26,13 @@ TEST(DENSE, SECOND){
     std::vector<double> b = {13, 7, 4};
 //auto val_1 = a * b;
     auto first = DenseMatrix<double>(a, 3, 3);
-    auto R = Householder_alg(first);
+    auto R = Householder_alg_R(first);
     std::vector<double> real_R = {-14, -21, 14, 0, -175, 70, 0, 0, -35};
     auto solve_from_func = R.getData();
     auto col_from_matr = first[0];
     for (int i = 0; i < real_R.size(); i++){
         ASSERT_NEAR(real_R[i], solve_from_func[i], 1000*std::numeric_limits<double>::epsilon());
     }
+
 
 }
