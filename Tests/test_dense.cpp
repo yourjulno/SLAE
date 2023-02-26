@@ -19,33 +19,34 @@
 //ASSERT_EQ(col, col_from_matr);
 //}
 
-TEST(DENSE, SECOND){
-
-    std::vector<double> a = {13, 7, 4, 7, 9, -3, 4, -3, 9};
-    std::vector<double> b = {13, 7, 4};
-//auto val_1 = a * b;
-    auto first = DenseMatrix<double>(a, 3, 3);
-//    auto val_2 = first(1, 1);
-   // std::vector<double> col = {7, 9 , -3};
-//    double w = col * b;
-//    auto len = lenght(col);
-//     auto first = DenseMatrix<double>(a, 3, 3);
-    auto R = Householder_alg(first);
-    
-//    auto col_from_matr = first[1];
-//    ASSERT_EQ(len, 139);
-//    ASSERT_EQ(9, val_2);
-//    ASSERT_EQ(col, col_from_matr);
-}
-
-//int main(){
+//TEST(DENSE, SECOND){
 //
 //    std::vector<double> a = {13, 7, 4, 7, 9, -3, 4, -3, 9};
 //    std::vector<double> b = {13, 7, 4};
 ////auto val_1 = a * b;
 //    auto first = DenseMatrix<double>(a, 3, 3);
+//    auto val_2 = first(1, 1);
+//    std::vector<double> col = {13, 7, 4};
+//    std::vector<double> row = {4, -3, 9};
+//    double w = col * b;
+//    auto len = lenght(col);
+////    auto first = DenseMatrix<double>(a, 3, 3);
 //    auto R = Householder_alg(first);
-//    for (auto i : R.getData()){
-//        std::cout << i;
-//    }
+//
+//    auto col_from_matr = first[0];
+////    ASSERT_EQ(len, 139);
+//    ASSERT_EQ(9, val_2);
+//    ASSERT_EQ(col, col_from_matr);
 //}
+
+int main(){
+
+    std::vector<double> a = {12, -51, 4, 6, 167, -68, -4, 24, -41};
+    std::vector<double> b = {13, 7, 4};
+//auto val_1 = a * b;
+    auto first = DenseMatrix<double>(a, 3, 3);
+    auto R = Householder_alg(first);
+    for (auto i : R.getData()){
+        std::cout << i << " ";
+    }
+}

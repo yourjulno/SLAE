@@ -49,29 +49,26 @@ T lenght (const std::vector<T> &other) {
     for (std::size_t i = 0; i != other.size(); i++){
         res = res + other[i]*other[i];
     }
-    return res;
+    return sqrt(res);
 }
-
-
-
-
 
 // плотная матрица
 template <class T>
 class DenseMatrix{
 
     int rows;
-
     int colns;
     std::vector<T> data;
 
 public:
 
-    DenseMatrix(const std::vector<T> &other, int col, int row);
-//    DenseMatrix(const std::vector<T> &other, const std::vector<T> &other2);
-    std::vector<T> operator*(const std::vector<double> &free) const;
-    T operator()(int i, int j) const; // i - row, j - coln
-    std::vector<T> operator[](int j) const;
+    DenseMatrix(const std::vector<T> &other, int col, int row): data(other), colns(col), rows(row){};
+    DenseMatrix(int size): colns(size), rows(size), data(std::vector<T>(size * size)){};
+
+    const T& operator()(const int &i, const int &j) const; // i - row, j - coln
+    T operator()(const int &i, const int &j);
+     std::vector<T> operator[](int i) const;
+
     [[nodiscard]] int GetSize() const{
         return data.size();
     }
@@ -86,40 +83,41 @@ public:
     }
 };
 
-// возвращаем столбец матрицы
 template<class T>
-std::vector<T> DenseMatrix<T>::operator[](int j) const { // j - номер столбца
-    std::vector<T> coln(rows);
-    for (std::size_t i = 0; i != data.size(); i++){
-        coln[i] = data[i * colns + j];
-    }
-    return coln;
-}
-
-
-template<class T>
-T DenseMatrix<T>::operator()(int i, int j) const {
+const T &DenseMatrix<T>::operator()(const int &i, const int &j) const {
     return data[i * colns + j];
 }
 
+// возвращаем столбец матрицы
 template<class T>
-DenseMatrix<T>::DenseMatrix(const std::vector<T> &other, int col, int row) {
-    data = other;
-    colns = col;
-    rows = row;
+std::vector<T> DenseMatrix<T>::operator[](int i) const { // i - номер столбца
+    std::vector<T> coln(rows);
+    for (std::size_t k = 0; k != rows ; k++){
+        coln[k] = data[k * colns + i];
+    }
+    return coln;
+}
+//замена столбца матрицы на выбранный столбец
+
+
+template<class T>
+T DenseMatrix<T>::operator()(const int &i, const int &j){
+    return data[i * colns + j];
 }
 
+
+
 // матрица на вектор
-template<class T>
-std::vector<T> DenseMatrix<T>::operator*(const std::vector<double> &free) const {
-    std::vector<T> solution(rows);
-    for (int i = 0; i < rows; i++){
-        for (int j = 0; j < colns; j++){
-            solution[i] = solution[i] + data[j]* free[j];
-        }
-    }
-    return solution;
-}
+//template<class T>
+//std::vector<T> DenseMatrix<T>::operator*(const std::vector<double> &free) const {
+//    std::vector<T> solution(rows);
+//    for (int i = 0; i < rows; i++){
+//        for (int j = 0; j < colns; j++){
+//            solution[i] = solution[i] + data[j]* free[j];
+//        }
+//    }
+//    return solution;
+//}
 
 // столбец * строка
 //template <class T>
