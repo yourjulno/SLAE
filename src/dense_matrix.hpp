@@ -24,9 +24,25 @@ T operator*(const std::vector<T> &other, const std::vector<T> &other2){
     }
     return result;
 }
+template <class T>
+T operator/(const std::vector<T> &other, const std::vector<T> &other2){
+    T result = 0;
+
+    int delta;
+    if (other.size() == other2.size()){
+        delta = 0;
+    }
+    else if (other2.size() > other.size()){
+        delta = other2.size() - other.size();
+    }
+    for (std::size_t i = 0; i != other.size(); i++){
+        result = result + other[i] / other2[i + delta];
+    }
+    return result;
+}
 
 template <class T>
-std::vector<T> operator-(const std::vector<T> &other, const std::vector<T> &other2){
+std::vector<T> operator-(const std::vector<T> &other,  const std::vector<T> &other2){
     std::vector<T> result(other.size());
     for (std::size_t i = 0; i != other.size(); i++){
         result[i] = other[i] - other2[i];
@@ -51,6 +67,15 @@ std::vector<T> operator*(T number, const std::vector<T> &other){
     }
     return res;
 }
+template <class T>
+std::vector<T> operator/(const std::vector<T> &other, T number){
+    std::vector<T> res(other.size());
+    for (int i = 0 ; i < other.size(); i++){
+        res[i] = other[i] / number;
+    }
+    return res;
+}
+
 
 //template <class T>
 //std::vector<T> operator*(T number, std::vector<T> other){

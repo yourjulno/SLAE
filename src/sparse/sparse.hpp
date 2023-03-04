@@ -7,6 +7,7 @@
 #include <vector>
 #include <set>
 
+
 template <class T>
 struct Tri{
     int i; // номер строки
@@ -42,6 +43,7 @@ public:
         col = col_;
         rows = rows_;
     }
+    //std::vector<T> without_diag(const std::vector<T> &other) const;
     // если подадим сет из структур
    CSR(const std::set<Tri<T>> & triple, int matr_col_, int matr_rows_) {
         matr_col = matr_col_;
@@ -67,6 +69,7 @@ public:
             iter = std::next(iter);
         }
     }
+    std::vector<T> get_diag() const;
 
     [[nodiscard]] int getMatrRows(int i) const {
         return rows[i];
@@ -88,7 +91,18 @@ public:
 
 };
 
-
+//template<class T>
+//std::vector<T> CSR<T>::without_diag(const std::vector<T> &other) const{
+//    std::vector<T> solution(matr_col, 0);
+//    for (int i = 0; i < matr_col; i++)
+//        for (int j = rows[i]; j < rows[i + 1]; j++) {
+//            i = !col[i];
+//            if (i) {
+//                solution[i] = solution[i] + values[j]*other[col[j]];
+//            }
+//        }
+//    return solution;
+//}
 
 
 template<class T>
@@ -113,6 +127,7 @@ template<class T>
 std::vector<T> CSR<T>::operator*(const std::vector<T> &free_) const {
 
 
+
     std::vector<T> solution(matr_rows, 0);
     for (int i = 0; i < matr_col; i++)
         for (int j = rows[i]; j < rows[i + 1]; j++){
@@ -121,5 +136,36 @@ std::vector<T> CSR<T>::operator*(const std::vector<T> &free_) const {
     return solution;
 
 }
+
+//template <class T>
+//std::vector<T> without_diag(const CSR<T> &A, const std::vector<T> &x){
+//
+//    std::vector<T> solution(A.getCol(), 0);
+//    for (int i = 0; i < A.getCol(); i++)
+//        for (int j = A.getMatrRows(i); j < A.getMatrRows(i + 1); j++) {
+//            i = !A.getColns(j);
+//            if (i) {
+//            solution[i] = solution[i] + A.getValues(j) * x[A.getColns(j)];
+//        }
+//        }
+//    return solution;
+//}
+template <class T>
+std::vector<T> diagonal(const CSR<T> &A){
+
+    std::vector<T> solution(A.getCol(), 0);
+    for (int i = 0; i < A.getCol(); i++)
+        for (int j = A.getMatrRows(i); j < A.getMatrRows(i + 1); j++){
+            if (i == A.getColns(j)){
+                solution[i] =  A.getValues(j);
+            }
+
+        }
+    return solution;
+}
+
+
+
+
 
 #endif //SLAE_SPARSE_HPP
