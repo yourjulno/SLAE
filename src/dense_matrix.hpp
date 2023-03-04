@@ -80,13 +80,13 @@ class DenseMatrix{
 
 public:
 
-    DenseMatrix(const std::vector<T> &other, int col, int row): data(other), colns(col), rows(row){};
+    DenseMatrix(std::vector<T> other, int col, int row): data(other), colns(col), rows(row){};
     DenseMatrix(int n, int m): colns(m), rows(n), data(std::vector<T>(n * m)){};
 
     const T& operator()(const int &i, const int &j) const; // i - row, j - coln
     T operator()(const int &i, const int &j);
      std::vector<T> operator[](int i) const;
-    std::vector<T> operator*(T num);
+    const std::vector<T> &operator*(T num);
 
     std::vector<T> getRow(int i) const;
     [[nodiscard]] int GetSize() const{
@@ -117,8 +117,6 @@ std::vector<T> DenseMatrix<T>::operator[](int i) const { // i - номер ст�
     }
     return coln;
 }
-//замена столбца матрицы на выбранный столбец
-
 
 template<class T>
 T DenseMatrix<T>::operator()(const int &i, const int &j){
@@ -157,7 +155,7 @@ DenseMatrix<T> coln_row(const std::vector<T> &other, const std::vector<T> &other
 
  //матрица на число
 template<class T>
-std::vector<T> DenseMatrix<T>::operator*(T num) {
+const std::vector<T> &DenseMatrix<T>::operator*(T num) {
     for (int i = 0; i < data.size(); i++){
         data[i] = data[i] * num;
     }
@@ -174,17 +172,4 @@ std::vector<T> DenseMatrix<T>::getRow(int i) const { // i - номер стро�
 }
 
 
-
-// столбец * строка
-//template <class T>
-//DenseMatrix<T> operator*(const std::vector<T> &other, const std::vector<T> other2){
-//    std::vector<T> result(other.size());
-//    T val;
-//    for(std::size_t i = 0; i != other.size(); i++) { // rows
-//        val = other[i] * other2[i];
-//        result[i] = val;
-//    }
-//
-//    return DenseMatrix<T>(result, other.size(), other2.size());
-//}
 #endif //SLAE_DENSE_MATRIX_H

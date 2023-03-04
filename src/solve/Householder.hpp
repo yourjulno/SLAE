@@ -48,7 +48,7 @@ DenseMatrix<T> computeP1(const std::vector<T> &v, int n, int m){
 }
 
 template <class T>
-std::vector<T> computePA(const std::vector<T> &v, const DenseMatrix<T> &start,
+std::vector<T> computePA(const std::vector<T> &v,
                          int n, int m, std::vector<T> start_data) {
 
     double betta;
@@ -62,7 +62,7 @@ std::vector<T> computePA(const std::vector<T> &v, const DenseMatrix<T> &start,
 
     for (std::size_t j = 0; j < m; j++) { // прошли строчку - пошли по всей матрцие(построчно!)
         auto h = take_row_from_data(start_data,   m, j);
-        betta = v * take_row_from_data(start_data,  m, j);
+        betta = copy_v * take_row_from_data(start_data,  m, j);
         int iter_for_v = 0;
 
         for ( std::size_t k = 0; k < n ; k++) {// обращение к элементам строки
@@ -92,7 +92,7 @@ std::pair<std::vector<T>, std::vector<T>> Householder_alg_R(const DenseMatrix<T>
     std::vector<T> v(n, 0);
     std::vector<T> data_copy = start_matrix.getData();
     std::vector<T> pdata;
-    for (int i = 0; i != m; i++) {// проход по столбцам
+    for (int i = 0; i != m - 1; i++) {// проход по столбцам
 
         v = take_coln_from_data(data_copy, i, n, i);
         //v = v + sign(v[0]) * |v|
@@ -108,7 +108,7 @@ std::pair<std::vector<T>, std::vector<T>> Householder_alg_R(const DenseMatrix<T>
 
         }
         else
-            pdata = computePA(v, P_1, n, m, pdata);
+            pdata = computePA(v, n, m, pdata);
 
         sigma = v * v;
         for (std::size_t j = i; j < m; j++) { // столбец прошли - пошли по всей матрице (тоже постолбцово)
@@ -117,7 +117,7 @@ std::pair<std::vector<T>, std::vector<T>> Householder_alg_R(const DenseMatrix<T>
             int iter_for_v = 0;
 
             for ( std::size_t k = i; k < n ; k++) {// обращение к элементам столбца
-                //(3, 1, 1, 2, 1, 1), takes (
+                //(3, 1, 1, 2, 1, 1), takes (3, 2)
                 data_copy[k*m + j] = data_copy[k*m + j] - (2 * (betta / sigma) * v[iter_for_v]);
                 iter_for_v++;
 
@@ -125,8 +125,6 @@ std::pair<std::vector<T>, std::vector<T>> Householder_alg_R(const DenseMatrix<T>
 
         }
     }
-//   data_copy.back() = - data_copy.back();
-//    pdata.back() = - pdata.back();
     std::pair<std::vector<T>, std::vector<T>> result = {data_copy, pdata};
 
     return  result;
