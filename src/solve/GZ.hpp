@@ -6,13 +6,21 @@
 #define SLAE_GZ_HPP
 #include "../sparse/sparse.hpp"
 #include "../dense_matrix.hpp"
-
+#include <iostream>
+#include <iomanip>
+#include <fstream>
 template <class T>
-std::vector<T> GZ(const CSR<T> &A, const std::vector<T> &x, const std::vector<T> b,T tolerance){
+std::pair<std::vector<T>,int> GZ(const CSR<T> &A, const std::vector<T> &x, const std::vector<T> b,T tolerance){
     std::vector<T> solve = A * x - b;
     std::vector<T> x_ = x;
+    std::ofstream outfile;
+    outfile.open("/home/julia/CLionProjects/SLAE/src/solve/mpi.txt", std::ofstream::out | std::ofstream::app);
+
+
+    int count = 0;
     T res;
     while (lenght(solve) > tolerance){
+        outfile << log(lenght(solve)) << " ";
         for (int i = 0; i < A.getCol(); i++){
             res = 0;
             for (int j = A.getMatrRows(i); j < A.getMatrRows(i + 1); j++) {
@@ -26,7 +34,12 @@ std::vector<T> GZ(const CSR<T> &A, const std::vector<T> &x, const std::vector<T>
             x_[i] = (b[i] - res)/A(i, i);
         }
         solve =  A * x_ - b;
+        count++;
+        outfile << count << std::endl;
     }
-    return solve;
+    outfile.close();
+
+    std::pair<std::vector<double>, int> k = {solve, count};
+    return k;
 }
 #endif //SLAE_GZ_HPP

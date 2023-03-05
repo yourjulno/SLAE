@@ -13,7 +13,7 @@ std::vector<T> Jacobi(const CSR<T> &A, const std::vector<T> &x, const std::vecto
     std::vector<T> solve = A * x - b;
     std::vector<T> x_ = x;
     std::vector<T> x_initial;
-
+    int count = 0;
     T res;
 
     while (lenght(solve) > tolerance){
@@ -31,6 +31,7 @@ std::vector<T> Jacobi(const CSR<T> &A, const std::vector<T> &x, const std::vecto
             x_[i] = (b[i] - res)/A(i, i);
         }
             solve =  A * x_ - b;
+            count++;
         }
 
     return solve;
