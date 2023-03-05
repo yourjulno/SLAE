@@ -6,7 +6,9 @@
 #define SLAE_JACOBI_H
 #include "../sparse/sparse.hpp"
 #include "../dense_matrix.hpp"
-
+#include <iostream>
+#include <iomanip>
+#include <fstream>
 template <class T>
 std::vector<T> Jacobi(const CSR<T> &A, const std::vector<T> &x, const std::vector<T> &b, T tolerance){
 
@@ -14,9 +16,13 @@ std::vector<T> Jacobi(const CSR<T> &A, const std::vector<T> &x, const std::vecto
     std::vector<T> x_ = x;
     std::vector<T> x_initial;
     int count = 0;
+    std::ofstream outfile;
+    outfile.open("/home/julia/CLionProjects/SLAE/src/solve/Jacobi.txt",
+                 std::ofstream::out | std::ofstream::app);
     T res;
 
     while (lenght(solve) > tolerance){
+
         x_initial = x_;
             for (int i = 0; i < A.getCol(); i++){
                 res = 0;
@@ -32,6 +38,8 @@ std::vector<T> Jacobi(const CSR<T> &A, const std::vector<T> &x, const std::vecto
         }
             solve =  A * x_ - b;
             count++;
+        outfile << log(lenght(solve)) << " ";
+        outfile << count << std::endl;
         }
 
     return solve;

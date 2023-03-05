@@ -14,7 +14,8 @@ template <class T>
 std::pair<std::vector<T>, int> MPI(const CSR<T> &A, const std::vector<T> &x, const std::vector<T> &b, T tolerance, T tau){
     std::vector<T> x_ = x;
     std::ofstream outfile;
-    outfile.open("/home/julia/CLionProjects/SLAE/src/solve/mpi.txt", std::ofstream::out | std::ofstream::app);
+    outfile.open("/home/julia/CLionProjects/SLAE/src/solve/MPI.txt",
+                 std::ofstream::out | std::ofstream::app);
 //    outfile << std::fixed;
 
     std::vector<T> solve = A * x - b;
@@ -23,9 +24,13 @@ std::pair<std::vector<T>, int> MPI(const CSR<T> &A, const std::vector<T> &x, con
 
         x_ = x_ - tau * solve;
         solve =  A * x_ - b;
-        outfile << lenght(solve) << " ";
+        if (count % 10000 == 0) {
+            outfile << log(lenght(solve)) << " ";
+            outfile << count << std::endl;
+        }
         count++;
-        outfile << count << std::endl;
+
+
     }
     outfile.close();
     std::pair<std::vector<T>,int> k = {solve, count};

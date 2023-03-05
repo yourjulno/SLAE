@@ -13,7 +13,7 @@ int main(){
 
 
     CSR<double> first(example, 2, 2);
-    std::vector<double> res = GZ(first, x,free, 0.001);
+    std::vector<double> res = GZ(first, x,free, pow(10,-12));
     for (auto i : res){
         std::cout << i << " ";
     }

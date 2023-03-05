@@ -14,7 +14,7 @@ std::pair<std::vector<T>,int> GZ(const CSR<T> &A, const std::vector<T> &x, const
     std::vector<T> solve = A * x - b;
     std::vector<T> x_ = x;
     std::ofstream outfile;
-    outfile.open("/home/julia/CLionProjects/SLAE/src/solve/mpi.txt", std::ofstream::out | std::ofstream::app);
+    outfile.open("/home/julia/CLionProjects/SLAE/src/solve/GZ.txt", std::ofstream::out | std::ofstream::app);
 
 
     int count = 0;
