@@ -3,8 +3,8 @@
 //
 
 
-#ifndef SLAE_TREEDIAGONALSOLVE_H
-#define SLAE_TREEDIAGONALSOLVE_H
+#ifndef SLAE_TREEDIAGONALSOLVE_HPP
+#define SLAE_TREEDIAGONALSOLVE_HPP
 
 template <class T>
 std::vector<T> solveTridiagonal(const ThirdDiagonalMatrix<T> &start_matrix,
@@ -37,4 +37,4 @@ std::vector<T> solveTridiagonal(const ThirdDiagonalMatrix<T> &start_matrix,
     return solution_data;
 }
 
-#endif //SLAE_TREEDIAGONALSOLVE_H
+#endif //SLAE_TREEDIAGONALSOLVE_HPP

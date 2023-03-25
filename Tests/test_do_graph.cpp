@@ -18,9 +18,9 @@ int main(){
     std::vector<double> x = {1, 1, 1};
     auto first = CSR<double>(a, 3, 3);
 
-    //auto k = Jacobi(first, x, b, pow(10, -5));
-//    auto l = GZ(first, x, b, pow(10, -5));
-    auto p = MPI(first, x, b, pow(10, -3), pow(10, -6));
+    auto k = Jacobi(first, x, b, pow(10, -5));
+    auto l = GZ(first, x, b, pow(10, -5));
+    //auto p = MPI(first, x, b, pow(10, -3), pow(10, -6));
 //    std::cout << k.second << " ";
 //    for (auto i : k.first){
 //        std::cout << i;

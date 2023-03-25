@@ -28,11 +28,11 @@
 int main(){
     std::set<Tri<double>> example = {{0,0,10},{0,1,1},
                                      {1,0,1},{1,1,7},{1,2, 0.1}, {2,2,1} };
-    std::vector<double> free = {1000, 999};
-    std::vector<double> x = {0,0};
+    std::vector<double> free = {20, 30, 1};
+    std::vector<double> x = {0,0, 0};
     std::vector<double> counts;
     std::vector<double> taus = {0.02, 0.04, 0.06, 0.08, 0.10};
-    CSR<double> first(example, 2, 2);
+    CSR<double> first(example, 3, 3);
 //  std::vector<double> res;
     for (int i = 0; i < 5; i++){
         auto res = MPI(first, x,free, pow(10, -12), taus[i]);

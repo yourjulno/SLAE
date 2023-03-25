@@ -20,7 +20,7 @@ std::pair<std::vector<T>,int> GZ(const CSR<T> &A, const std::vector<T> &x, const
     int count = 0;
     T res;
     while (lenght(solve) > tolerance){
-        outfile << log(lenght(solve)) << " ";
+
         for (int i = 0; i < A.getCol(); i++){
             res = 0;
             for (int j = A.getMatrRows(i); j < A.getMatrRows(i + 1); j++) {
@@ -35,6 +35,7 @@ std::pair<std::vector<T>,int> GZ(const CSR<T> &A, const std::vector<T> &x, const
         }
         solve =  A * x_ - b;
         count++;
+        outfile << log(lenght(solve)) << " ";
         outfile << count << std::endl;
     }
     outfile.close();

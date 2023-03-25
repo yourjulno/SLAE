@@ -43,6 +43,9 @@ T operator/(const std::vector<T> &other, const std::vector<T> &other2){
 
 template <class T>
 std::vector<T> operator-(const std::vector<T> &other,  const std::vector<T> &other2){
+#ifndef NDEBUG
+    assert(other.size() == other2.size());
+#endif
     std::vector<T> result(other.size());
     for (std::size_t i = 0; i != other.size(); i++){
         result[i] = other[i] - other2[i];
@@ -52,6 +55,9 @@ std::vector<T> operator-(const std::vector<T> &other,  const std::vector<T> &oth
 
 template <class T>
 std::vector<T> operator+(const std::vector<T> &other, const std::vector<T> other2){
+#ifndef NDEBUG
+    assert(other.size() == other2.size());
+#endif
     std::vector<T> result(other.size());
     for(std::size_t i = 0; i != other.size(); i++){
         result[i] = other[i] + other2[i];

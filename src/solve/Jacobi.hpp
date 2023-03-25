@@ -2,8 +2,8 @@
 // Created by julia on 04.03.23.
 //
 
-#ifndef SLAE_JACOBI_H
-#define SLAE_JACOBI_H
+#ifndef SLAE_JACOBI_HPP
+#define SLAE_JACOBI_HPP
 #include "../sparse/sparse.hpp"
 #include "../dense_matrix.hpp"
 #include <iostream>
@@ -44,4 +44,4 @@ std::vector<T> Jacobi(const CSR<T> &A, const std::vector<T> &x, const std::vecto
 
     return solve;
 }
-#endif //SLAE_JACOBI_H
+#endif //SLAE_JACOBI_HPP
