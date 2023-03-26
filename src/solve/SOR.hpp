@@ -7,13 +7,14 @@
 #include "../sparse/sparse.hpp"
 #include "../dense_matrix.hpp"
 #include <iostream>
-
+#include "MPI.hpp"
 template <class T>
-std::pair<std::vector<T>,int> SOR(const CSR<T> &A, const std::vector<T> &x, const std::vector<T> b,T tolerance){
+std::pair<std::vector<T>,int> SOR(const CSR<T> &A, const std::vector<T> &x,
+                                  const std::vector<T> b, const T tolerance, const T omega){
     std::vector<T> solve = A * x - b;
     std::vector<T> x_ = x;
     const T maxl = max_lambda(A);
-    const T omega = 1.5;
+
     int count = 0;
     T res;
     while (lenght(solve) > tolerance){
@@ -37,5 +38,11 @@ std::pair<std::vector<T>,int> SOR(const CSR<T> &A, const std::vector<T> &x, cons
     }
     std::pair<std::vector<double>, int> k = {solve, count};
     return k;
+}
+
+template <class T>
+std::pair<std::vector<T>,int> SSOR(const CSR<T> &A, const std::vector<T> &x,
+                                   const std::vector<T> b, const T tolerance, const T omega ){
+
 }
 #endif //SLAE_SOR_HPP
