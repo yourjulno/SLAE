@@ -89,8 +89,6 @@ std::pair<std::vector<T>, std::size_t> GZFast(const CSR<T> &A, const std::vector
     T nu0 = 1;
     T nu1 = 1 / ro;
     int count = 0;
-    T res;
-    T temp;
 
     while (lenght(solve) > tolerance){
 

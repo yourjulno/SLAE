@@ -11,7 +11,7 @@
 #include <fstream>
 //x - начальное приближение
 template <class T>
-std::pair<std::vector<T>, int> MPI(const CSR<T> &A, const std::vector<T> &x, const std::vector<T> &b, T tolerance, T tau){
+std::pair<std::vector<T>, std::pair<std::vector<T>, int>> MPI(const CSR<T> &A, const std::vector<T> &x, const std::vector<T> &b, T tolerance, T tau){
     std::vector<T> x_ = x;
     std::vector<T> solve = A * x - b;
     int count = 0;
@@ -22,7 +22,7 @@ std::pair<std::vector<T>, int> MPI(const CSR<T> &A, const std::vector<T> &x, con
         count++;
     }
     std::pair<std::vector<T>,int> k = {solve, count};
-    return k;
+    return std::make_pair(x_,k);
 }
 
 //chebyshev acceleration
@@ -41,7 +41,7 @@ T max_lambda(const CSR<T> &A){
 }
 
 template <class T>
-std::pair<std::vector<T>, std::size_t> MPI_fast(const CSR<T> &A, const std::vector<T> &x,
+std::pair<std::vector<T>, std::pair<std::vector<T>, int>> MPI_fast(const CSR<T> &A, const std::vector<T> &x,
                                                 const std::vector<T> &b, T tolerance, const int n){
     const int r = 3;
     const T pi = 3.14;
@@ -95,7 +95,7 @@ std::pair<std::vector<T>, std::size_t> MPI_fast(const CSR<T> &A, const std::vect
         }
     }
 
-    std::pair<std::vector<T>, std::size_t> k = {solve_, count};
-    return k;
+    std::pair<std::vector<T>,int> k = {solve, count};
+    return std::make_pair(x_,k);
 }
 #endif //SLAE_MPI_HPP
