@@ -27,11 +27,11 @@ std::pair<std::vector<T>, std::pair<std::vector<T>, int>> CG(const CSR<T> &A, co
                 dr = d * r;
 
                 alpha = dr / (d * Ad);
+
+                x_ = x_ - alpha * d;
                 //Ax_(i+1) = Ax_i - A * alpha *d
                 //Ax_(i+1) - b = Ax_i - b - A * alpha *d
                 //r_(i+1) = r_(i) - A * alpha * d
-                x_ = x_ - alpha * d;
-
                 r = r - alpha * Ad;
                 d = r + (r * r / dr) * d;
 

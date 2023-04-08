@@ -25,10 +25,30 @@ TEST(DESCENT, FIRST){
     auto resFast = MPI_fast(first, x0, b,  accuracy, R);
     // Result w/ Steepest descent method
     auto res = Descent_method(first, x0, b, accuracy);
+    std::cout << res.second.second;
     // Testing results
    // std::cout << res.second.second;
     for (int i = 0; i < r.size(); ++i) {
         ASSERT_NEAR(res.first[i], r[i], 1e-10);
         ASSERT_NEAR(resFast.first[i], r[i], 1e-10);
+    }
+    ASSERT_EQ(1, 1);
+}
+
+TEST(CG, second_test) {
+    std::set<Tri<double>> example{{0, 0, 99.}, {0, 1, 12.}, {0, 2, 10.},
+                                  {1, 0, 8.}, {1, 1, 10.9}, {1, 2, 0.1},
+                                  {2, 0, 5.}, {2, 1, 4.}, {2, 2, 70.}};
+    CSR<double> first(example, 3, 3);
+
+    double tolerance = 1e-12;
+    std::vector<double> b = {1., 5., 4.};
+    std::vector<double> x = {0.01, 1.2, -0.14};
+    std::vector<double> right_solve = {-0.0535106, 0.497691, 0.0325256};
+
+    auto res_from_CG = Descent_method<double>(first, x, b, tolerance);
+
+    for (int i = 0; i < x.size(); ++i) {
+        ASSERT_NEAR(res_from_CG.first[i], right_solve[i], 1e-6);
     }
 }
