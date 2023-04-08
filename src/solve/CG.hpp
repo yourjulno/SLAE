@@ -15,6 +15,10 @@ std::pair<std::vector<T>, std::pair<std::vector<T>, int>> CG(const CSR<T> &A, co
     std::vector<T> r = A * x - b;
     std::vector<T> Ad;
     std::vector<T> d = r;
+    std::ofstream outfile;
+    outfile.open("/home/julia/CLionProjects/SLAE/src/solve/CG.txt",
+                 std::ofstream::out | std::ofstream::app);
+    outfile << x_[0] << " " << x_.back() << std::endl;
     double alpha;
     double dr;
     int count = 0;
@@ -34,6 +38,8 @@ std::pair<std::vector<T>, std::pair<std::vector<T>, int>> CG(const CSR<T> &A, co
                 //r_(i+1) = r_(i) - A * alpha * d
                 r = r - alpha * Ad;
                 d = r + (r * r / dr) * d;
+                outfile << x_[0] << " " << x_[x.size() - 1] << std::endl;
+
 
 
                 count++;
@@ -44,6 +50,7 @@ std::pair<std::vector<T>, std::pair<std::vector<T>, int>> CG(const CSR<T> &A, co
             }
         }
     }
+    outfile.close();
     std::pair<std::vector<T>,int> k = {r, count};
     return std::make_pair(x_, k);
 }

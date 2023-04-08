@@ -79,7 +79,10 @@ template <class T>
 std::pair<std::vector<T>, std::size_t> GZFast(const CSR<T> &A, const std::vector<T> &x,
                                       const std::vector<T> &b, T tolerance, T ro){
 
-
+    std::ofstream outfile;
+    outfile.open("/home/julia/CLionProjects/SLAE/src/solve/GZfast.txt",
+                 std::ofstream::out | std::ofstream::app);
+    outfile << x[0] << " " << x.back() << std::endl;
     std::vector<T> y0 = x;
     std::vector<T> y_1 = iter_for_GZ(A, y0, b);
 
@@ -105,6 +108,8 @@ std::pair<std::vector<T>, std::size_t> GZFast(const CSR<T> &A, const std::vector
 
         solve = A * y - b;
         count++;
+        outfile << log(lenght(solve)) << " ";
+        outfile << count << std::endl;
     }
 
     std::pair<std::vector<double>, int> k = {solve, count};
