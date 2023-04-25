@@ -88,7 +88,7 @@ std::pair<std::vector<T>, std::vector<T>> Householder_alg_R(const DenseMatrix<T>
     int m = start_matrix.getColns(); // кол-во столбцов
     int n = start_matrix.getRows(); // кол-во строк
 
-    DenseMatrix<T> P_1{n, m};
+//    DenseMatrix<T> P_1{n, m};
     std::vector<T> v(n, 0);
     std::vector<T> data_copy = start_matrix.getData();
     std::vector<T> pdata;
@@ -103,7 +103,7 @@ std::pair<std::vector<T>, std::vector<T>> Householder_alg_R(const DenseMatrix<T>
 
         if (i == 0) {
 
-            P_1 = computeP1(v, n, m); // начальная матрица P1
+            auto P_1 = computeP1(v, n, m); // начальная матрица P1
              pdata = P_1.getData();
 
         }

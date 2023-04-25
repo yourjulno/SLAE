@@ -43,12 +43,13 @@ T operator/(const std::vector<T> &other, const std::vector<T> &other2){
 
 template <class T>
 std::vector<T> operator-(const std::vector<T> &other,  const std::vector<T> &other2){
-#ifndef NDEBUG
-    assert(other.size() == other2.size());
-#endif
+    int delta = 0;
+    if (other.size() > other2.size()){
+        delta = other.size() - other2.size();
+    }
     std::vector<T> result(other.size());
     for (std::size_t i = 0; i != other.size(); i++){
-        result[i] = other[i] - other2[i];
+        result[i] = other[i] - other2[i + delta];
     }
     return result;
 }
@@ -110,13 +111,24 @@ class DenseMatrix{
     std::vector<T> data;
 
 public:
-
+    using idx_t = int;
+    using elm_t = T;
     DenseMatrix(std::vector<T> other, int col, int row): data(other), colns(col), rows(row){};
-    DenseMatrix(int n, int m): colns(m), rows(n), data(std::vector<T>(n * m)){};
 
-    const T& operator()(const int &i, const int &j) const; // i - row, j - coln
-    T operator()(const int &i, const int &j);
+    std::vector<T> operator*(const std::vector<T> &free_) const;
+    const elm_t &operator()(std::size_t i,  std::size_t j) const{
+        return data[i * colns+ j];
+    } // i - row, j - coln
+    elm_t &operator()(const idx_t &i, const idx_t &j) {
+         return data[i * colns + j];
+    }
+
      std::vector<T> operator[](int i) const;
+    void swap(const idx_t &first, const idx_t &second) {
+        for (int i = 0; i < rows; ++i) {
+            std::swap(data[first * rows + i], data[second * rows + i]);
+        }
+    }
     const std::vector<T> &operator*(T num);
 
     std::vector<T> getRow(int i) const;
@@ -129,29 +141,19 @@ public:
     [[nodiscard]] int getColns() const{
         return colns;
     }
-    std::vector<T> getData() const{
+    const std::vector<T> &getData() const{
         return data;
     }
 };
-
-template<class T>
-const T &DenseMatrix<T>::operator()(const int &i, const int &j) const {
-    return data[i * colns + j];
-}
 
 // возвращаем столбец матрицы
 template<class T>
 std::vector<T> DenseMatrix<T>::operator[](int i) const { // i - номер столбца
     std::vector<T> coln(rows);
-    for (std::size_t k = 0; k != rows ; k++){
-        coln[k] = data[k * colns + i];
+    for (std::size_t k = 0; k < rows ; k++){
+        coln[k] = data[k * rows + i];
     }
     return coln;
-}
-
-template<class T>
-T DenseMatrix<T>::operator()(const int &i, const int &j){
-    return data[i * colns + j];
 }
 
 template<class T> // n - rows, m - colns
@@ -200,6 +202,20 @@ std::vector<T> DenseMatrix<T>::getRow(int i) const { // i - номер стро�
         row[k] = data[i * colns + k];
     }
     return row;
+}
+
+template<class T>
+std::vector<T> DenseMatrix<T>::operator*(const std::vector<T> &free_) const {
+
+
+
+    std::vector<T> solution(colns, 0);
+    for (int i = 0; i < colns; i++){
+
+            solution[i] = solution[i] + data[i]*free_[i];
+        }
+    return solution;
+
 }
 
 

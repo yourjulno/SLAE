@@ -5,6 +5,9 @@
 #include <gtest/gtest.h>
 #include "../src/dense_matrix.hpp"
 #include "../src/solve/Householder.hpp"
+#include "../src/solve/Descent.hpp"
+#include "../src/solve/MPI.hpp"
+#include "../src/solve/GMRES.hpp"
 #include <limits>
 #include <ctime>
 
@@ -17,6 +20,19 @@ auto first = DenseMatrix<double>(a, 2, 2);
 auto val_2 = first(1, 1);
 std::vector<double> col = {2, 4};
 auto col_from_matr = first[1];
+//
+const auto n = 4;
+
+std::set<Tri<double>> example = {{0, 0, 12}, {1, 1, 14.}, {2, 2, 16.}, {3, 3, 18}};
+
+CSR<double> first_(example, n, n);
+std::vector<double> free(n, 6);
+std::vector<double> x(n, 0);
+auto res_from_arnoldi = GMRES(first_, x, free, 10, 1e-12);
+for (auto i : res_from_arnoldi){
+    std::cout << i << std:: endl;
+}
+std::cout << lenght(res_from_arnoldi);
 ASSERT_EQ(4, val_2);
 ASSERT_EQ(col, col_from_matr);
 }
@@ -74,17 +90,5 @@ TEST(DENSE, THIRD){
 
 }
 
-//int main(){
-//    std::vector<double> a = {12, -51, 4, 6, 167, -68, -4, 24, -41};
-//    std::vector<double> b = {-4, 24, -41};
-//    std::vector<double> c = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-////auto val_1 = a * b;
-//    auto first = DenseMatrix<double>(a, 3, 3);
-//    auto R = Householder_alg_R(first);
-//    std::vector<double> real_R = {-14, -21, 14, 0, -175, 70, 0, 0, -35};
-//    auto solve_from_func = R.first;
-//    auto Q = R.second;
-//    for (auto i : Q){
-//        std::cout << i << " ";
-//    }
-//}
+
+
