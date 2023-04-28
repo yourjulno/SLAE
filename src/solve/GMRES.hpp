@@ -120,8 +120,10 @@ int Givence( DenseMatrix<T> &Hes, const int i, std::vector<std::vector<T>>  &tur
     turns.push_back(new_turn);
 
     for (std::size_t k = 0; k <= turns_count; k++){
-        h_i[k] = turns[k][0] * h_i[k] + turns[k][1]*h_i[k + 1];
-        h_i[k+1] = turns[k][2] * h_i[k] + turns[k][3]*h_i[k + 1];
+        auto h_k = turns[k][0] * h_i[k] + turns[k][1]*h_i[k + 1];
+        auto h_k_1 = turns[k][2] * h_i[k] + turns[k][3]*h_i[k + 1];
+        h_i[k] = h_k;
+        h_i[k+1] = h_k_1;
     }
 
     set_last_coln_to_Hessian(Hes, h_i, i);
@@ -134,21 +136,16 @@ int Arnoldi_algorythm(const CSR<T> &A, std::vector<std::vector<T>> &Q,
                       DenseMatrix<T> &Hes, const int i, T tolerance){
 
     const int n = i;
-    std::vector<T> v_0 = Q.back();
-
+    std::vector<T> v_0 = A * Q[n];
     T h_;
-    std::vector<T> v_k = A * Q[n];
-
     for (std::size_t j = 0; j <= n; j ++){
-
-        h_ = v_0 * v_k;
-        v_0 = v_0 - h_ * v_k;
+        h_ = v_0 * Q[i];
+        v_0 = v_0 - h_ * Q[i];
         Hes(j, n) = h_;
-
         }
 
         h_ = lenght(v_0);
-        Hes(n + 1, n) = h_;
+
         if (h_ > tolerance){
             Hes(n + 1, n) = h_;
         }

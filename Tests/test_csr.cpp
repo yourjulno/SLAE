@@ -6,7 +6,7 @@
 #include "../src/sparse/sparse.hpp"
 #include "../src/solve/Descent.hpp"
 #include "../src/solve/MPI.hpp"
-#include "../src/solve/GZ.hpp"
+#include "../src/solve/GaussSeidel.hpp"
 #include "../src/solve/CG.hpp"
 //TEST(SPARSE, FIRST){
 //    std::set<Tri<double>> example = {{0,0,1},{0,1,2},
