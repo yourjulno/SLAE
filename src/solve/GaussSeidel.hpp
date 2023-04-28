@@ -2,8 +2,8 @@
 // Created by julia on 04.03.23.
 //
 
-#ifndef SLAE_GZ_HPP
-#define SLAE_GZ_HPP
+#ifndef SLAE_GAUSSSEIDEL_HPP
+#define SLAE_GAUSSSEIDEL_HPP
 #include "../sparse/sparse.hpp"
 #include "../dense_matrix.hpp"
 #include <iostream>
@@ -116,4 +116,4 @@ std::pair<std::vector<T>, std::size_t> GZFast(const CSR<T> &A, const std::vector
     return k;
 }
 
-#endif //SLAE_GZ_HPP
+#endif //SLAE_GAUSSSEIDEL_HPP

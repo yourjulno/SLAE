@@ -111,19 +111,19 @@ class DenseMatrix{
     std::vector<T> data;
 
 public:
-    using idx_t = int;
+    using idx_t = std::size_t;
     using elm_t = T;
     DenseMatrix(std::vector<T> other, int col, int row): data(other), colns(col), rows(row){};
-
+    DenseMatrix(int rows, int cols): rows(rows), colns(cols), data(cols*rows){};
     std::vector<T> operator*(const std::vector<T> &free_) const;
-    const elm_t &operator()(std::size_t i,  std::size_t j) const{
+    const elm_t &operator()(idx_t i,  idx_t j) const{
         return data[i * colns+ j];
     } // i - row, j - coln
-    elm_t &operator()(const idx_t &i, const idx_t &j) {
+    elm_t &operator()(const idx_t i, const idx_t j) {
          return data[i * colns + j];
     }
 
-     std::vector<T> operator[](int i) const;
+     std::vector<T> operator[](idx_t i) const;
     void swap(const idx_t &first, const idx_t &second) {
         for (int i = 0; i < rows; ++i) {
             std::swap(data[first * rows + i], data[second * rows + i]);
@@ -148,7 +148,7 @@ public:
 
 // возвращаем столбец матрицы
 template<class T>
-std::vector<T> DenseMatrix<T>::operator[](int i) const { // i - номер столбца
+std::vector<T> DenseMatrix<T>::operator[](idx_t i) const { // i - номер столбца
     std::vector<T> coln(rows);
     for (std::size_t k = 0; k < rows ; k++){
         coln[k] = data[k * rows + i];
