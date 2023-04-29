@@ -22,14 +22,16 @@ std::vector<double> col = {2, 4};
 auto col_from_matr = first[1];
 //
 const auto n = 4;
-
+    std::set<Tri<double>> example2 = {{0,0,1},{0,1,2},
+                                   {0,3,3},{1,2,4}, {2, 1, 1},
+                                     {2, 3, 11}, {0, 0, 0}};
 std::set<Tri<double>> example = {{0, 0, 12}, {1, 1, 14.}, {2, 2, 16.}, {3, 3, 18}};
 
-CSR<double> first_(example, n, n);
+CSR<double> first_(example2, n, n);
 std::vector<double> free(n, 6);
 std::vector<double> x(n, 0);
-const int m = 20;
-auto res_from_arnoldi = GMRES(first_, x, free, m, 1e-14);
+
+auto res_from_arnoldi = GMRES(first_, x, free, n);
 std::cout << lenght(res_from_arnoldi);
 ASSERT_EQ(4, val_2);
 ASSERT_EQ(col, col_from_matr);
