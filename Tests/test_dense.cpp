@@ -28,7 +28,8 @@ std::set<Tri<double>> example = {{0, 0, 12}, {1, 1, 14.}, {2, 2, 16.}, {3, 3, 18
 CSR<double> first_(example, n, n);
 std::vector<double> free(n, 6);
 std::vector<double> x(n, 0);
-auto res_from_arnoldi = GMRES(first_, x, free, 10, 1e-14);
+const int m = 20;
+auto res_from_arnoldi = GMRES(first_, x, free, m, 1e-14);
 std::cout << lenght(res_from_arnoldi);
 ASSERT_EQ(4, val_2);
 ASSERT_EQ(col, col_from_matr);
