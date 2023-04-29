@@ -91,19 +91,17 @@ int Arnoldi_algorythm(const CSR<T> &A, std::vector<std::vector<T>> &Q,
 }
 
 template <class T>
-DenseMatrix<T> convert_from_vector_to_matrix(std::vector<std::vector<T>> & other, const int m) {
-    const int cols = m;
-    const int rows = m;
-    const int data_size = rows*cols;
-    std::vector<T> data;
-    data.reserve(data_size);
+DenseMatrix<T> convert_from_vector_to_matrix(std::vector<std::vector<T>> & other, const int k, int m) {
 
-   for (int i = 0; i < m; i++){
+    std::vector<T> data(m * m, 0);
+
+    DenseMatrix<T> result{data, m, m};
+   for (int i = 0; i < k; i++){
       for (int j = 0; j < other.size(); j++){
-          data.push_back(other[j][i]);
+          result(j, i) = other[i][j];
       }
    }
-    DenseMatrix<T> result{data, cols, rows};
+
     return result;
 
 }
@@ -119,13 +117,13 @@ std::vector<T> GMRES(const CSR<T> &A, const std::vector<T> x_0, const std::vecto
     DenseMatrix<T> H(m + 1, m);
     std::vector<std::pair<T, T>> turns;
     turns.reserve(x_0.size());
-
+    DenseMatrix<T> V(m, m);
     std::vector<std::vector<T>> Q;
     Q.push_back(r_0);
     std::vector<T> z(m, 0);
     z[0] = norm_r0;
     std::vector<T> y;
-    std::vector<T> x = x_0;
+    std::vector<T> x;
         for (std::size_t i = 2; i < m; i++) {
             Arnoldi_algorythm(A, Q, H, i - 2);
             Givence(H, i - 2, turns);
@@ -136,8 +134,10 @@ std::vector<T> GMRES(const CSR<T> &A, const std::vector<T> x_0, const std::vecto
             //z.push_back(Q[i - 2][0] * norm_r0);
 
             y =  backSubstTopTriangula(H, z, i - 1);
-            auto V = convert_from_vector_to_matrix(Q, i - 1);
+            V = convert_from_vector_to_matrix(Q, i - 1, m);
             x = x + V * y;
+
+
             std::cout << lenght(x) << " ";
         }
 
