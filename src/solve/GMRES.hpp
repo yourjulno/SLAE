@@ -23,13 +23,11 @@ std::vector<T> backGauss(const DenseMatrix<T> &A, const std::vector<T>& b){
 }
 
 template <class T>
-int Givence( DenseMatrix<T> &Hes, const int i, std::vector<std::pair<T, T>>  &turns){
+int Givence(DenseMatrix<T> &Hes, const int i, std::vector<std::pair<T, T>>  &turns){
 
     for (std::size_t k = 0; k < turns.size(); ++k){
-        T cos_theta = turns[k].first;
-        T sin_theta = turns[k].second;
-        T h_k = cos_theta * Hes(k, i) + sin_theta * Hes(k + 1, i);
-        T h_k_1 = -sin_theta * Hes(k, i) + cos_theta * Hes(k + 1, i);
+        T h_k = turns[k].first * Hes(k, i) + turns[k].second * Hes(k + 1, i);
+        T h_k_1 = -turns[k].first * Hes(k, i) + turns[k].second * Hes(k + 1, i);
         Hes(k, i) = h_k;
         Hes(k + 1, i) = h_k_1;
     }
@@ -64,11 +62,11 @@ int ArnoldiAlgorithm(const CSR<T> &A, std::vector<std::vector<T>> &Q,
             Hes(j, n) = h_;
         }
 
-        h_ = lenght(v_0);
-        Hes(n + 1, n) = h_;
+    h_ = lenght(v_0);
+    Hes(n + 1, n) = h_;
 
-        v_0 = v_0 / lenght(v_0);
-        Q.push_back(v_0);
+    v_0 = v_0 / h_;
+    Q.push_back(v_0);
   return 0;
 }
 
