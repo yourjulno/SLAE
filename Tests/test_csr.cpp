@@ -48,7 +48,7 @@ TEST(BiSG, SECOND){
     std::vector<double> x(n, 0);
 
 
-    auto res_from_bisg = BiSG(first, x, free, 4);
+    auto res_from_bisg = BiSG(first, x, free, 10, 1e-14);
     std::cout << lenght(res_from_bisg);
 }
 TEST(DESCENT_, FIRST){

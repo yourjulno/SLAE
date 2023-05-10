@@ -36,9 +36,9 @@ class CSR{
 public:
     CSR() = default;
     // если готовая CSR матрица
-    [[maybe_unused]] CSR(const std::vector<T>& val_, const std::vector<T>& col_,
-           const std::vector<T>& rows_){
-
+   CSR(int cols_, int rowss, const std::vector<T>& val_, const std::vector<int>& col_, const std::vector<int>& rows_){
+        matr_col = cols_;
+        matr_rows = rowss;
         values = val_;
         col = col_;
         rows = rows_;
@@ -88,6 +88,37 @@ public:
     }
     std::vector<T> operator*(const std::vector<T> &free_) const;
     T operator()(int row, int coln) const;
+    CSR transpose() const{
+        int NonZero = values.size();
+        std::vector<T> tVals(NonZero);
+        std::vector<int> tCols(NonZero);
+        std::vector<int> tRows(matr_rows + 1);
+        for(int i = 0; i < NonZero; ++i) tRows[col[i] + 1]++;
+        int S = 0;
+        int tmp;
+        for(int i = 1; i <= matr_rows; ++i){
+            tmp = tRows[i];
+            tRows[i] = S;
+            S += tmp;
+        }
+        int j1, j2, Col, RIndex, IIndex;
+        T V;
+        for(int i = 0; i < matr_rows; ++i){
+            j1 = rows[i];
+            j2 = rows[i+1];
+            Col = i;
+            for(int j = j1; j < j2; ++j){
+                V = values[j];
+                RIndex = col[j];
+                IIndex = tRows[RIndex + 1];
+                tVals[IIndex] = V;
+                tCols[IIndex] = Col;
+                tRows[RIndex + 1]++;
+            }
+        }
+        return CSR(matr_col, matr_rows, tVals, tRows, tCols);
+    }
+
 
 };
 
